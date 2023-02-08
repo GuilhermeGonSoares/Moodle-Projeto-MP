@@ -76,7 +76,7 @@ def finalizarProva(req, prova_id):
   try:
     prova = models.Prova.objects.get(pk=prova_id)
     prova.finalizada = True
-    prova.data = datetime.datetime.now
+    prova.data = datetime.datetime.now()
     prova.save()
   except ObjectDoesNotExist:
     raise Http404('Objects not found in database')

@@ -85,7 +85,7 @@ class Prova(models.Model):
   descricao = models.TextField(null=True, blank=True)
   finalizada = models.BooleanField(default=False)
   data = models.DateTimeField(default=datetime.datetime.now)
-  professor = models.OneToOneField(Professor, on_delete=models.CASCADE)
+  professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.descricao
