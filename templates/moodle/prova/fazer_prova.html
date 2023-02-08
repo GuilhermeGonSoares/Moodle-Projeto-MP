@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>PROVA</h1>
+  <div>
+    <h2>Descrição: {{prova.descricao}}</h2>
+    <h3>Nota: {{prova.nota_total}}</h3>
+  </div>
+  <form action="{% url 'moodle:corrigir-prova' prova.id%}" method="post">
+    {% csrf_token %}
+    {% for questao in questoes %}
+      <fieldset>
+        <legend>Questão {{ forloop.counter }}: {{ questao }}</legend>
+        <p>{{questao.enunciado}}</p>
+        {% for op in questao.alternativa_set.all %}
+          <input type="radio" name="question{{ questao.id }}" value="{{op.alternativa}}">
+          <label for="{{op.alternativa}}{{ questao.id }}">{{op.alternativa}}) {{op.texto_alternativa}}</label>
+        {% endfor %}
+      </fieldset>
+
+    {% endfor %}
+    <button type="submit">Confirmar</button>
+  </form>
+</body>
+</html>
+
+
