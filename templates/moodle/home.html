@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-    <h1>Cursos</h1>
-    {% for curso in cursos %}
-      CURSO: <a href="{% url 'moodle:curso-detail' curso.id %}">{{curso.nome}}</a> - PROFESSOR: {{curso.professor}}
-      <ul>
-      {% for aluno in curso.aluno.all %}
-        <li>{{aluno.matricula}} - {{aluno.user.first_name}}</li>
+{% extends 'moodle/global.html' %}
+{% block content %}
+    <h1 class="mb-3">Bem-Vindo aluno: <span class="text-success">{{user.name}}</span></h1>
+    <h4 class='text-info mb-4'>Esses são seus cursos cadastrados!</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Curso</th>
+          <th scope="col">Professor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for curso in cursos %}
+        <tr>
+          <td><a href="{% url 'moodle:curso-detail' curso.id%}">{{curso.nome}}</a></td>
+          <td>{{curso.professor}}</td>
+
+        </tr>
       {% endfor %}
-      </ul>
-    {% endfor %}
-</body>
-</html>
+      </tbody>
+    </table>
+
+{% endblock content %}

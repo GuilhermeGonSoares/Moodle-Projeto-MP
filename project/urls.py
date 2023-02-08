@@ -18,6 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('moodle.urls'))
+    path('', include('moodle.urls')),
+    path('user/', include('user.urls'))
 
 ]

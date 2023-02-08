@@ -1,0 +1,19 @@
+{% extends 'moodle/global.html' %}
+{% block content %}
+    <h1>Bem-Vindo professor: {{user.name}}</h1>
+    <div class="container bg-light">
+      <h3>Esses são seus cursos desse semestre:</h3>
+      {% for curso in cursos %}
+        <h5>CURSO: <span class="text-info"> {{curso.nome}}</span></h5>
+        <ul>
+        <h5 class="text-secondary">Alunos cadastrados:</h5>
+        {% for aluno in curso.aluno.all %}
+          <li>{{aluno.id}}- {{aluno.user.name}}</li>
+        {% endfor %}
+
+        </ul>
+      {% endfor %}
+    </div>
+
+
+{% endblock content %}

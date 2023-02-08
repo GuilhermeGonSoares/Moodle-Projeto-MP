@@ -1,6 +1,6 @@
 from django import forms
 
-from moodle.models import Prova, Questao
+from moodle.models import Alternativa, Prova, Questao
 
 
 class ProvaForm(forms.ModelForm):

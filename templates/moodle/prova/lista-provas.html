@@ -1,27 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>PROVAS!</h1>
-  <a href="{% url 'moodle:provas-create' %}">Criar Prova</a>
-  {% for prova in provas %}
-  <div>
-    <span> -> {{prova.nota_total}} - {{prova.disciplina}} - {{prova.descricao}} - {{prova.finalizada}}</span>
-    <a href="{% url 'moodle:provas-update' prova.id %}">Editar</a>
-    <a href="{% url 'moodle:finalizar-prova' prova.id %}">Finalizar</a>
-    {% for questao in prova.questao.all %}
-     <p>
-      {{questao.enunciado}}
-      {{questao.peso}}
-      {{questa.gabarito}}
-    </p>
-    {% endfor %}
-  </div>
-  {% endfor %}
-</body>
-</html>
+
+{% extends 'moodle/global.html' %}
+{% block content %}
+  <h1 class="text-info mb-4">{{user.name}} essas são suas provas:</h1>
+  <h2 class="mb-5">Para montar a sua prova<a href="{% url 'moodle:provas-create' %}"> Clique aqui.</a></h2>
+  {% if provasabertas %}
+    <div class="container text-center bg-dark mb-5">
+      <h3 class="text-light">Provas que estão disponíveis:</h3>
+      {% for prova in provasabertas %}
+
+      <div class="row bg-light">
+        <div class="col-sm-8 mb-3">
+          <h5 class="text-secondary text-md mt-3" >Enunciado: {{prova.descricao}}</h5>
+          <h5 class="text-secondary text-md mt-3" >Disciplina: {{prova.disciplina}}</h5>
+          <p class="text-info">Questões:</p>
+
+          {% for questao in prova.questao.all %}
+          <div class="row bg-light">
+            <div class="col-sm-8">
+              <p>{{questao.enunciado}}</p>
+
+            </div>
+
+            <div class="col-sm-2">
+              Valor: {{questao.peso}}
+            </div>
+            <div class="col-sm-2">
+              Gabarito: {{questao.gabarito}}
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+        <div class="col-sm-4 mb-auto">
+          <p class="text-info mt-3">Valor da prova: {{prova.nota_total}}</p>
+          <p class="text-info mt-3"><a href="{% url 'moodle:provas-update' prova.id %}">Editar prova</a></p>
+          <p class="text-info mt-3"><a href="{% url 'moodle:finalizar-prova' prova.id %}">Finalizar prova</a></p>
+
+        </div>
+      </div>
+      <span class="text-dark">a</span>
+      {% endfor %}
+
+    </div>
+  {% endif %}
+
+
+  {% if provasfinalizadas %}
+    <div class="container text-center bg-secondary mb-5">
+      <h3 class="text-light">Provas que foram finalizadas</h3>
+      {% for prova in provasfinalizadas %}
+
+      <div class="row bg-light">
+        <div class="col-sm-8 mb-3">
+          <h5 class="text-danger text-md mt-3" >Enunciado: {{prova.descricao}}</h5>
+          <p class="text-info">Questões:</p>
+
+          {% for questao in prova.questao.all %}
+          <div class="row bg-light">
+            <div class="col-sm-8">
+              <p>{{questao.enunciado}}</p>
+
+            </div>
+
+            <div class="col-sm-2">
+              Valor: {{questao.peso}}
+            </div>
+            <div class="col-sm-2">
+              Gabarito: {{questao.gabarito}}
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+        <div class="col-sm-4 mb-auto">
+          <p class="text-info mt-3">Valor da prova: {{prova.nota_total}}</p>
+          <p class="text-info mt-3"><a href="#">Alunos que fizeram</a></p>
+        </div>
+      </div>
+      <span class="text-secondary">a</span>
+      {% endfor %}
+
+    </div>
+  {% endif %}
+{% endblock content %}

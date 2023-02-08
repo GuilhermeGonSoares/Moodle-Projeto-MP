@@ -19,7 +19,7 @@
         <legend>Questão {{ forloop.counter }}: {{ questao }}</legend>
         <p>{{questao.enunciado}}</p>
         {% for op in questao.alternativa_set.all %}
-          <input type="radio" name="question{{ questao.id }}" value="{{op.alternativa}}">
+          <input type="radio" name="question{{ questao.id }}" value="{{op.alternativa}}" required>
           <label for="{{op.alternativa}}{{ questao.id }}">{{op.alternativa}}) {{op.texto_alternativa}}</label>
         {% endfor %}
       </fieldset>

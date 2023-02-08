@@ -1,20 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-    <h1>CURSO: {{disciplina.nome}}</h1>
-    <h3>Professor: {{disciplina.professor}}</h3>
+{% extends 'moodle/global.html' %}
+{% block content %}
 
-    <p>Provas disponíveis para serem feitas:</p>
-    <ul>
-      {% for prova in provas %}
-        <li><a href="{% url 'moodle:exibir-prova' prova.id %}">{{prova.descricao}}</a></li>
-      {% endfor %}
-    </ul>
-</body>
-</html>
+  <h1 class="mb-3">CURSO: <span class="text-info">{{disciplina.nome}}</span></h1>
+  <div class="container bg-light">
+    <div class="d-flex justify-content-between">
+      <h3 class="mb-3 mr-3">Professor: <span class="text-info">{{disciplina.professor}}</span></h3>
+      <h3 class="mb-3">Aluno: <span class="text-info">{{aluno}}</span></h3>
+    </div>
+    <div class="container ml-4">
+      <h5 class="mt-4">Provas disponíveis para serem feitas:</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Prova</th>
+            <th scope="col">Valor da prova</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for prova in provas_diponiveis %}
+          <tr>
+            <td><a href="{% url 'moodle:exibir-prova' prova.id %}">{{prova.descricao}}</a></td>
+            <td>{{prova.nota_total}}</td>
+
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+    <h5 class="mt-5">Provas feitas:</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Prova</th>
+            <th scope="col">Nota</th>
+            <th scope="col">Resultado</th>
+            <th scope="col">Data</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for prova, desempenho in provas_feitas %}
+          <tr>
+            <td>{{prova.descricao}}</td>
+            <td>{{prova.nota_total}}</td>
+            <td>{{desempenho.nota}}</td>
+            <td>{{desempenho.data}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table
+
+
+{% endblock %}
+

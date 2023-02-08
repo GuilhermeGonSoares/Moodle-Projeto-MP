@@ -1,6 +1,11 @@
+{% extends 'moodle/global.html' %}
+{% block content %}
+
 <h1>CRIAR PROVA</h1>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Create Prova</button>
 </form>
+
+{% endblock content %}

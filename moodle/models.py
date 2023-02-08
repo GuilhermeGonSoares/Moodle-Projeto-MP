@@ -1,10 +1,8 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-
-class Usuario(AbstractUser):
-  is_teacher = models.BooleanField(default=False)
 
 
 class Departamento(models.Model):
@@ -15,19 +13,18 @@ class Departamento(models.Model):
 
 class Professor(models.Model):
   user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-  departamento = models.OneToOneField(Departamento, on_delete=models.CASCADE)
+  departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.user.first_name
+    return self.user.name
 
 
 class Aluno(models.Model):
-  matricula = models.CharField(max_length=9, primary_key=True)
   user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-  idade = models.IntegerField()
+
 
   def __str__(self):
-    return self.user.first_name
+    return self.user.name
 
 class Disciplina(models.Model):
   nome = models.CharField(max_length=100)
@@ -43,7 +40,7 @@ class Inscricao(models.Model):
   aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.disciplina.nome + ' - ' + self.aluno.user.first_name
+    return self.disciplina.nome + ' - ' + self.aluno.user.name
 
 
 class Questao(models.Model):
@@ -59,6 +56,8 @@ class Questao(models.Model):
   gabarito = models.CharField(max_length=1, choices=gabarito_choices)
   enunciado = models.TextField()
   departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
+  professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
+
 
   def __str__(self):
     return self.enunciado
@@ -80,13 +79,16 @@ class Alternativa(models.Model):
     return self.texto_alternativa
 
 class Prova(models.Model):
-  user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-
   nota_total = models.IntegerField()
   disciplina = models.ForeignKey(Disciplina, null=True, on_delete=models.SET_NULL)
   questao = models.ManyToManyField(Questao)
   descricao = models.TextField(null=True, blank=True)
   finalizada = models.BooleanField(default=False)
+  data = models.DateTimeField(default=datetime.datetime.now)
+  professor = models.OneToOneField(Professor, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return self.descricao
 
 class CadernoResposta(models.Model):
   resposta_choices = (
@@ -98,7 +100,7 @@ class CadernoResposta(models.Model):
   )
 
   resposta_aluno = models.CharField(max_length=1, choices=resposta_choices)
-  questao = models.OneToOneField(Questao, on_delete=models.CASCADE)
+  questao = models.ForeignKey(Questao, on_delete=models.CASCADE)
   acertou = models.BooleanField(default=False)
   desempenho = models.ForeignKey('Desempenho', on_delete=models.CASCADE)
 
@@ -110,6 +112,10 @@ class CadernoResposta(models.Model):
 
 class Desempenho(models.Model):
   aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
-  prova = models.OneToOneField(Prova, on_delete=models.CASCADE)
+  prova = models.ForeignKey(Prova, on_delete=models.CASCADE)
   nota = models.IntegerField()
   prova_finalizada = models.BooleanField(default=False)
+  data = models.DateTimeField(default=datetime.datetime.now)
+
+  def __str__(self):
+    return 'Aluno: ' + self.aluno.user.name + ' Prova: ' + self.prova.descricao

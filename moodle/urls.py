@@ -27,11 +27,11 @@ urlpatterns = [
     path('provas/', ProvaView.ProvaListView.as_view(), name='provas'),
     path('provas/<int:prova_id>/', ProvaView.exibirProva, name='exibir-prova'),
     path('provas/<int:prova_id>/corrigir/', ProvaView.corrigirProva, name='corrigir-prova'),
-    path('questoes/create/', QuestoesViews.QuestoesCreateView.as_view(), name='questoes-create'),
+    path('questoes/create/', QuestoesViews.QuestaoAlternativasCreateView.as_view(), name='questoes-create'),
     path('provas/create/', ProvaView.ProvaCreateView.as_view(), name='provas-create'),
     path('provas/finalizar/<int:prova_id>/', ProvaView.finalizarProva, name='finalizar-prova'),
-    path('questoes/update/<int:pk>/', QuestoesViews.QuestoesUpdateView.as_view(), name='questoes-update'),
-    path('provras/update/<int:pk>/', ProvaView.ProvaUpdateView.as_view(), name='provas-update'),
+    # path('questoes/update/<int:pk>/', QuestoesViews.QuestaoAlternativasUpdateView.as_view(), name='questoes-update'),
+    path('provas/update/<int:pk>/', ProvaView.ProvaUpdateView.as_view(), name='provas-update'),
     path('questoes/delete/<int:pk>/', QuestoesViews.QuestoesDeleteView.as_view(), name='questoes-delete'),
 
 ]
