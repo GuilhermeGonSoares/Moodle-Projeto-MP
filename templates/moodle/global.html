@@ -1,5 +1,5 @@
 {% load bootstrap4 %}
-
+{% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,13 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% bootstrap_css %}
-
+    {% include 'partials/head.html' %}
     <title>{% block title %}{% endblock title %} Moodle</title>
 
 </head>
 
 <body>
-
 
     <div>
         {% include 'partials/header.html' %}
@@ -24,7 +23,6 @@
 
         </main>
     </div>
-    {% bootstrap_javascript %}
 </body>
 
 </html>

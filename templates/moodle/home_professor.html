@@ -2,18 +2,37 @@
 {% block content %}
     <h1>Bem-Vindo professor: {{user.name}}</h1>
     <div class="container bg-light">
-      <h3>Esses são seus cursos desse semestre:</h3>
-      {% for curso in cursos %}
-        <h5>CURSO: <span class="text-info"> {{curso.nome}}</span></h5>
-        <ul>
-        <h5 class="text-secondary">Alunos cadastrados:</h5>
-        {% for aluno in curso.aluno.all %}
-          <li>{{aluno.id}}- {{aluno.user.name}}</li>
+      <h3 class="mt-3 mb-3">Esses são seus cursos desse semestre:</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Curso</th>
+            <th scope="col">Capacidade da turma</th>
+            <th scope="col">Alunos Matriculados</th>
+            <th scope="col">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for curso in cursos %}
+          <tr>
+            <td><span class="text-info"> {{curso.nome}}</span></td>
+            <td>{{curso.quantidade_alunos}}</td>
+            <td>{{curso.aluno.count}}</td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Ver alunos
+                </button>
+                <ul class="dropdown-menu">
+                {% for aluno in curso.aluno.all %}
+                  <li>{{aluno.user.name}}</li>
+                {% endfor %}
+                </ul>
+              </div>
+            </td>
+          </tr>
         {% endfor %}
-
-        </ul>
-      {% endfor %}
-    </div>
-
+        </tbody>
+      </table>
 
 {% endblock content %}

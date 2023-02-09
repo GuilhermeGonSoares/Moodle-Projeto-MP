@@ -4,21 +4,30 @@
   <h2 class="mb-5"><span class="text-info">{{user.name}}</span> gostaria de contribuir com questoes?<a href="{% url 'moodle:questoes-create' %}"> Clique aqui.</a></h2>
   {% if  questoes %}
     <div class="container text-center bg-dark mb-5">
-      <h3 class="text-light">Questões já cadastradas:</h3>
+      <h3 class="text-light p-3">Questões já cadastradas:</h3>
       {% for questao in questoes %}
 
       <div class="row bg-light">
         <div class="col-sm-8 mb-3">
           <h5 class="text-dark text-md mt-3" >Enunciado: {{questao.enunciado}}</h5>
-          <p class="text-info">Alternativas:</p>
+          <p class="mt-5">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Alternativas
+            </button>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <div class="row row-cols-5">
+                {% for opcao in questao.alternativa_set.all %}
 
-          <div class="row row-cols-5">
-          {% for opcao in questao.alternativa_set.all %}
+                  <div class="col">{{opcao.alternativa}}) {{opcao.texto_alternativa}}</div>
 
-            <div class="col">{{opcao.alternativa}}) {{opcao.texto_alternativa}}</div>
-
-          {% endfor %}
+                {% endfor %}
+                </div>
+            </div>
           </div>
+
+
         </div>
         <div class="col-sm-4">
           <p class="text-info mt-3">Valor da questão: {{questao.peso}}</p>
@@ -26,7 +35,7 @@
           <p class="text-info">Questão do professor: {{questao.professor}}</p>
 
           {% if questao.professor == request.user.professor %}
-            <a href="{% url 'moodle:questoes-delete' questao.id %}">Excluir</a>
+            <a class="btn btn-primary mb-3"href="{% url 'moodle:questoes-delete' questao.id %}" role="button">Excluir</a>
           {% endif %}
         </div>
       </div>

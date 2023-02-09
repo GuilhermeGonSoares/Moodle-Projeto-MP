@@ -3,7 +3,12 @@
 <div class="container mt-auto">
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+    <div class="form-group">
+      <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+      {{ field }}
+    </div>
+  {% endfor %}
     <input type="submit" value="Login">
   </form>
 </div>
