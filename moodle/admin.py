@@ -4,6 +4,13 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from moodle import models
 from user.models import User
 
+"""
+@package moodle
+
+@brief Define especificações do Django Admin
+
+"""
+
 
 class UserAdmin(BaseUserAdmin):
     """Define para usuários a página de admin"""
@@ -37,6 +44,7 @@ class UserAdmin(BaseUserAdmin):
             )
         }),
     )
+
 
 admin.site.register(User, UserAdmin)
 
