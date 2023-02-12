@@ -13,6 +13,11 @@ from util.LoginRequired import MyLoginRequired
 from util.ProfessorRequired import ProfessorRequiredMixin
 
 
+class PseudoDesempenho:
+  def __init__(self, nota, data):
+    self.nota = nota
+    self.data = data
+
 class ProvaListView(ProfessorRequiredMixin, generic.ListView):
   context_object_name = 'provas'
   queryset = models.Prova.objects.all()
@@ -129,3 +134,21 @@ def corrigirProva(req: HttpRequest, prova_id):
 
 
   return redirect(reverse('moodle:curso-detail', args=(pk,)), context={'desempenho': desempenho_aluno})
+
+def alunos_provas_feitas(req, prova_id):
+  prova = models.Prova.objects.get(pk=prova_id)
+  alunos = prova.disciplina.aluno.all()
+  prova_finalizada = []
+  for aluno in alunos:
+    desempenho = prova.desempenho_set.filter(aluno=aluno)
+    if desempenho:
+      prova_finalizada.append((aluno, desempenho.first(), True))
+    else:
+      desempenho = PseudoDesempenho(0, prova.data)
+      prova_finalizada.append((aluno, desempenho, False))
+
+  print(prova_finalizada)
+  return render(req, 'moodle/prova/alunos_provas.html', {
+    'prova_finalizada': prova_finalizada,
+    'prova': prova,
+  })

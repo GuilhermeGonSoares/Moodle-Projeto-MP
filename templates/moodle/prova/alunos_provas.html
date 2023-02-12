@@ -1,37 +1,21 @@
 {% extends 'moodle/global.html' %}
 {% block content %}
 
-  <h1 class="mb-3">CURSO: <span class="text-info">{{disciplina.nome}}</span></h1>
+  {% comment %} <h1 class="mb-3">CURSO: <span class="text-info">{{disciplina.nome}}</span></h1>
   <div class="container bg-light">
     <div class="d-flex justify-content-between">
       <h3 class="mb-3 mr-3">Professor: <span class="text-info">{{disciplina.professor}}</span></h3>
       <h3 class="mb-3">Aluno: <span class="text-info">{{aluno}}</span></h3>
     </div>
     <div class="container ml-4">
-      <h5 class="mt-4">Provas disponíveis para serem feitas:</h5>
+      <h5 class="mt-4">Provas disponíveis para serem feitas:</h5> {% endcomment %}
+
+    <h5 class="mt-5">Alunos:</h5>
+    <br>
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Prova</th>
-            <th scope="col">Valor da prova</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for prova in provas_diponiveis %}
-          <tr>
-            <td><a href="{% url 'moodle:exibir-prova' prova.id %}">{{prova.descricao}}</a></td>
-            <td>{{prova.nota_total}}</td>
-
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-
-    <h5 class="mt-5">Notas das provas:</h5>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Prova</th>
+            <th scope="col">Aluno</th>
             <th scope="col">Nota Máxima</th>
             <th scope="col">Resultado</th>
             <th scope="col">Feitas</th>
@@ -39,9 +23,9 @@
           </tr>
         </thead>
         <tbody>
-        {% for prova, desempenho, feita in provas_feitas %}
+        {% for aluno, desempenho, feita in prova_finalizada %}
           <tr>
-            <td>{{prova.descricao}}</td>
+            <td>{{aluno.user.name}}</td>
             <td>{{prova.nota_total}}</td>
             <td>{{desempenho.nota}}</td>
             <td>
