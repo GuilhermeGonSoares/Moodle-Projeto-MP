@@ -1,0 +1,28 @@
+digraph "Graphical Class Hierarchy"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node0 [label="migrations.Migration",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="steelblue1",style="solid"];
+  Node1 [label="moodle.migrations.0001\l_initial.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10001__initial_1_1_migration.html",tooltip=" "];
+  Node0 -> Node2 [dir="back",color="steelblue1",style="solid"];
+  Node2 [label="moodle.migrations.0002\l_initial.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10002__initial_1_1_migration.html",tooltip=" "];
+  Node0 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node3 [label="moodle.migrations.0003\l_desempenho_data_prova\l_data.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10003__desempenho__data__prova__data_1_1_migration.html",tooltip=" "];
+  Node0 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node4 [label="moodle.migrations.0004\l_alter_questao_departamento.\lMigration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10004__alter__questao__departamento_1_1_migration.html",tooltip=" "];
+  Node0 -> Node5 [dir="back",color="steelblue1",style="solid"];
+  Node5 [label="moodle.migrations.0005\l_questao_professor_alter\l_questao_departamento.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10005__questao__professor__alter__questao__departamento_1_1_migration.html",tooltip=" "];
+  Node0 -> Node6 [dir="back",color="steelblue1",style="solid"];
+  Node6 [label="moodle.migrations.0006\l_alter_professor_departamento.\lMigration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10006__alter__professor__departamento_1_1_migration.html",tooltip=" "];
+  Node0 -> Node7 [dir="back",color="steelblue1",style="solid"];
+  Node7 [label="moodle.migrations.0007\l_prova_professor.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10007__prova__professor_1_1_migration.html",tooltip=" "];
+  Node0 -> Node8 [dir="back",color="steelblue1",style="solid"];
+  Node8 [label="moodle.migrations.0008\l_alter_prova_professor.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classmoodle_1_1migrations_1_10008__alter__prova__professor_1_1_migration.html",tooltip=" "];
+  Node0 -> Node9 [dir="back",color="steelblue1",style="solid"];
+  Node9 [label="user.migrations.0001\l_initial.Migration",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classuser_1_1migrations_1_10001__initial_1_1_migration.html",tooltip=" "];
+}
