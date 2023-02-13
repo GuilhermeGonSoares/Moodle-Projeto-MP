@@ -1,6 +1,6 @@
 {% extends 'moodle/global.html' %}
 {% block content %}
-<form method="post">
+<form method="post" class="mt-5">
   {% csrf_token %}
   {% for field in form %}
     <div class="form-group">
@@ -8,6 +8,6 @@
       {{ field }}
     </div>
   {% endfor %}
-  <input type="submit" value="Salvar">
+  <input type="submit" class="btn btn-primary" value="Salvar">
 </form>
 {% endblock content %}

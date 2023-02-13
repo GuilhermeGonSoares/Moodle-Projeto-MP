@@ -1,8 +1,8 @@
 {% extends 'moodle/global.html' %}
 {% block content %}
 
-<h1>CRIAR PROVA</h1>
-<form action="{% url 'moodle:provas-create' %}" method="post">
+<h1>ATUALIZAR PROVA</h1>
+<form method="post">
   {% csrf_token %}
   {% for field in form %}
     <div class="form-group">

@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
@@ -36,45 +36,59 @@ class ProvaListView(ProfessorRequiredMixin, generic.ListView):
     return queryset
 
 
-
 class ProvaCreateView(MyLoginRequired, ProfessorRequiredMixin, generic.CreateView):
     model = models.Prova
     form_class = ProvaForm
     template_name = 'moodle/prova/create.html'
     success_url = reverse_lazy('moodle:provas')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['professor'] = self.request.user.professor
+        return kwargs
+      
     def form_valid(self, form):
+      print("ESTOU AQUI NO FORM_VALID")
       prova = form.save(commit=False)
-      questoes = [models.Questao.objects.get(pk=int(id)) for id in self.request.POST.getlist('questao')]
+      questoes = [models.Questao.objects.get(pk=int(id)) for id in self.request.POST.getlist('questoes')]
       prova.nota_total = 0
       prova.professor=self.request.user.professor
       prova.save()
-
+      
       for questao in questoes:
         prova.nota_total += questao.peso
-
       prova.questao.set(questoes)
-
+      
       return super().form_valid(form)
 
 class ProvaUpdateView(MyLoginRequired, ProfessorRequiredMixin, generic.UpdateView):
     model = models.Prova
     form_class = ProvaForm
-    template_name = 'moodle/prova/create.html'
+    template_name = 'moodle/prova/update.html'
     success_url = reverse_lazy('moodle:provas')
+
+    def get_form_kwargs(self):
+      kwargs = super().get_form_kwargs()
+      kwargs['professor'] = self.request.user.professor
+      return kwargs
+  
 
     def form_valid(self, form):
       prova = form.save(commit=False)
-      questoes = [models.Questao.objects.get(pk=int(id)) for id in self.request.POST.getlist('questao')]
-      prova.nota_total = 0
+      prova.disciplina = form.cleaned_data['disciplina']
+      prova.descricao = form.cleaned_data['descricao']
+      questoes = form.cleaned_data['questoes']
       prova.save()
-
+      
+      prova.questao.set(questoes)
+      
+      prova.nota_total = 0
       for questao in questoes:
         prova.nota_total += questao.peso
-
-      prova.questao.set(questoes)
-
+      
+      
       return super().form_valid(form)
+
 
 @login_required(login_url='user:login')
 def finalizarProva(req, prova_id):
