@@ -28,6 +28,8 @@ urlpatterns = [
     path('provas/<int:prova_id>/', ProvaView.exibirProva, name='exibir-prova'),
     path('provas/<int:prova_id>/corrigir/',
          ProvaView.corrigirProva, name='corrigir-prova'),
+     path('provas/<int:prova_id>/relatorio/',
+         ProvaView.relatorioProva, name='relatorio-prova'),
     path('provas/<int:prova_id>/alunos/',
          ProvaView.alunos_provas_feitas, name='alunos-provas'),
     path('questoes/create/', QuestoesViews.QuestaoAlternativasCreateView.as_view(),

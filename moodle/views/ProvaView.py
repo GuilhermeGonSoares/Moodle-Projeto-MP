@@ -128,8 +128,6 @@ def corrigirProva(req: HttpRequest, prova_id):
     if 'quest' in q:
       questoes_resolvidas.append(dados.get(q))
 
-
-
   for i, questao in enumerate(prova.questao.all()):
     correto = False
     if questoes_resolvidas[i] == questao.gabarito:
@@ -165,4 +163,17 @@ def alunos_provas_feitas(req, prova_id):
   return render(req, 'moodle/prova/alunos_provas.html', {
     'prova_finalizada': prova_finalizada,
     'prova': prova,
+  })
+
+def relatorioProva(req, prova_id):
+  prova = models.Prova.objects.get(pk=prova_id)
+  aluno = req.user.aluno
+  desempenho = prova.desempenho_set.filter(aluno=aluno)
+  respostas_aluno = desempenho[0].cadernoresposta_set.all()
+  relatorio = []
+  for resp in respostas_aluno:
+    relatorio.append((resp.questao, resp.questao.peso, resp.questao.gabarito, resp.resposta_aluno))
+
+  return render(req, 'moodle/curso/relatorio_prova.html', {
+    'relatorio': relatorio,
   })

@@ -41,7 +41,13 @@
         <tbody>
         {% for prova, desempenho, feita in provas_feitas %}
           <tr>
-            <td>{{prova.descricao}}</td>
+            <td>
+              {% if feita %}
+                <a href="{% url 'moodle:relatorio-prova' prova.id %}">{{prova.descricao}}</a>
+              {% else %}
+                {{prova.descricao}}
+              {% endif %}
+            </td>
             <td>{{prova.nota_total}}</td>
             <td>{{desempenho.nota}}</td>
             <td>
