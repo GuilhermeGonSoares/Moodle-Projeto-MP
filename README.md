@@ -2,5 +2,6 @@
 
 - FrontEnd: Foi utilizado em HTML, CSS e Bootstrap
 
-- BackEnd: Foi desenvolvido em Python+Django utilizando
+- BackEnd: Foi desenvolvido em Python+Django
+
 
